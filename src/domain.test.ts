@@ -22,10 +22,17 @@ describe('chouette domain', () => {
   })
   it('awards six points with the standard 4-2-0 three-player scale', () => {
     const match = createNewMatch(3)
-    match.scores[0] = { strokes: [3, 4, 5] }
+    match.scores[0] = { strokes: [4, 5, 6] }
     expect(getHolePoints(match, 0)).toEqual([4, 2, 0])
-    match.scores[1] = { strokes: [3, 3, 5] }
+    match.scores[1] = { strokes: [4, 4, 5] }
     expect(getHolePoints(match, 1)).toEqual([3, 3, 0])
+  })
+  it('awards all six points for a birdie and twelve for an eagle', () => {
+    const match = createNewMatch(3)
+    match.scores[0] = { strokes: [3, 4, 5] }
+    expect(getHolePoints(match, 0)).toEqual([6, 0, 0])
+    match.scores[1] = { strokes: [2, 4, 5] }
+    expect(getHolePoints(match, 1)).toEqual([12, 0, 0])
   })
   it('normalizes net scores against the lowest score on the hole', () => {
     const match = createNewMatch(3)
@@ -39,7 +46,7 @@ describe('chouette domain', () => {
   })
   it('awards six points with the 3-2-1-0 four-player scale', () => {
     const match = createNewMatch(4)
-    match.scores[0] = { strokes: [3, 4, 5, 6] }
+    match.scores[0] = { strokes: [4, 5, 6, 7] }
     expect(getHolePoints(match, 0)).toEqual([3, 2, 1, 0])
   })
   it('round-trips a versioned save file', () => {

@@ -7,6 +7,7 @@ The application supports:
 - six points per hole;
 - the standard `4–2–0` scoring for three players;
 - the `3–2–1–0` scoring variant for four players;
+- six points for a net birdie and twelve points for a net eagle;
 - net scores calculated from player handicaps;
 - relative hole scores calculated by subtracting the lowest net score;
 - relative final totals calculated by subtracting the lowest cumulative total;

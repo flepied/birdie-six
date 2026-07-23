@@ -69,6 +69,10 @@ export function getRelativeNetScores(match: Match, holeIndex: number): Array<num
 export function getHolePoints(match: Match, holeIndex: number): number[] {
   const netScores = getNetScores(match, holeIndex)
   if (netScores.some((score) => score === null)) return match.players.map(() => 0)
+  const par = match.course.holes[holeIndex].par
+  const scoresUnderPar = netScores.map((score) => par - score!)
+  if (scoresUnderPar.some((score) => score >= 2)) return scoresUnderPar.map((score) => score >= 2 ? 12 : 0)
+  if (scoresUnderPar.some((score) => score === 1)) return scoresUnderPar.map((score) => score === 1 ? 6 : 0)
   const ordered = [...(netScores as number[])].sort((left, right) => left - right)
   const pointValues = match.players.length === 3 ? [4, 2, 0] : [3, 2, 1, 0]
   return netScores.map((score) => {
