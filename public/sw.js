@@ -1,5 +1,5 @@
 const CACHE_NAME = 'match-play-golf-v1'
-const APP_SHELL = ['/', '/index.html', '/manifest.webmanifest', '/icon.svg']
+const APP_SHELL = ['/birdie-six/', '/birdie-six/index.html', '/birdie-six/manifest.webmanifest', '/birdie-six/icon.svg']
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)))

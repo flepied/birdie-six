@@ -2,12 +2,12 @@
   "name": "Match Play Golf",
   "short_name": "Match Play",
   "description": "Saisissez les scores d'un match play au golf.",
-  "start_url": "/",
+  "start_url": "/birdie-six/",
   "display": "standalone",
   "background_color": "#f5f7f2",
   "theme_color": "#12372a",
   "lang": "fr",
   "icons": [
-    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+    { "src": "/birdie-six/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
   ]
 }
