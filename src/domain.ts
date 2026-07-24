@@ -90,6 +90,13 @@ export function getTotalPoints(match: Match): number[] {
   return match.players.map((_, playerIndex) => match.scores.reduce((total, __, holeIndex) => total + getHolePoints(match, holeIndex)[playerIndex], 0))
 }
 
+export function getGrossScoresToPar(match: Match): number[] {
+  return match.players.map((_, playerIndex) => match.scores.reduce((total, holeScore, holeIndex) => {
+    const grossScore = holeScore.strokes[playerIndex]
+    return grossScore === null ? total : total + grossScore - match.course.holes[holeIndex].par
+  }, 0))
+}
+
 export function getRelativeTotalPoints(match: Match): number[] {
   const totalPoints = getTotalPoints(match)
   const lowestTotal = Math.min(...totalPoints)

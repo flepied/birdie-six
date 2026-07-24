@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { createNewMatch, getHolePoints, getRelativeNetScores, getRelativeTotalPoints, getStrokesReceived, parseAppState, serializeAppState } from './domain'
+import { createNewMatch, getGrossScoresToPar, getHolePoints, getRelativeNetScores, getRelativeTotalPoints, getStrokesReceived, parseAppState, serializeAppState } from './domain'
 
 describe('chouette domain', () => {
   it('supports three and four players', () => {
@@ -43,6 +43,12 @@ describe('chouette domain', () => {
     const match = createNewMatch(3)
     match.scores[0] = { strokes: [4, 4, 4] }
     expect(getRelativeTotalPoints(match)).toEqual([0, 0, 0])
+  })
+  it('calculates gross scores relative to par', () => {
+    const match = createNewMatch(3)
+    match.scores[0] = { strokes: [4, 5, 6] }
+    match.scores[1] = { strokes: [3, null, 4] }
+    expect(getGrossScoresToPar(match)).toEqual([-1, 1, 2])
   })
   it('awards six points with the 3-2-1-0 four-player scale', () => {
     const match = createNewMatch(4)
