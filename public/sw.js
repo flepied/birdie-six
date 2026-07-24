@@ -1,4 +1,4 @@
-const CACHE_NAME = 'match-play-golf-v1'
+const CACHE_NAME = 'match-play-golf-v2'
 const APP_SHELL = ['/birdie-six/', '/birdie-six/index.html', '/birdie-six/manifest.webmanifest', '/birdie-six/icon.svg']
 
 self.addEventListener('install', (event) => {
@@ -7,9 +7,22 @@ self.addEventListener('install', (event) => {
 })
 
 self.addEventListener('activate', (event) => {
-  event.waitUntil(self.clients.claim())
+  event.waitUntil(
+    caches.keys()
+      .then((cacheNames) => Promise.all(cacheNames.filter((cacheName) => cacheName !== CACHE_NAME).map((cacheName) => caches.delete(cacheName))))
+      .then(() => self.clients.claim()),
+  )
 })
 
 self.addEventListener('fetch', (event) => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith(fetch(event.request).then((response) => {
+      const copy = response.clone()
+      caches.open(CACHE_NAME).then((cache) => cache.put('/birdie-six/index.html', copy))
+      return response
+    }).catch(() => caches.match('/birdie-six/index.html')))
+    return
+  }
+
   event.respondWith(caches.match(event.request).then((cached) => cached ?? fetch(event.request)))
 })
